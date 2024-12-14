@@ -2,7 +2,7 @@
  * Represents a blockchain block that contains data, a reference to the previous block,
  * and a unique hash for identification.
  */
-class Block {
+export default class Block {
   // Private fields
   #timestamp;
   #lastHash;
@@ -55,11 +55,25 @@ class Block {
     return this.#data;
   }
 
+  /**
+   * Returns a string representation of the block.
+   * @returns {string} A string representation of the block.
+   */
   toString() {
     return `Block -
 Timestamp : ${this.#timestamp}
 Last Hash : ${this.#lastHash.substring(0, 10)}
 Hash      : ${this.#hash.substring(0, 10)}
 Data      : ${this.#data}`;
+  }
+
+  /**
+   * Creates a new block with the provided data and the previous block.
+   * @param {Block} lastBlock - The previous block in the chain.
+   * @param {any} data - The data to be stored in the new block.
+   * @returns {Block} A new block with the provided data.
+   */
+  static genesis() {
+    return new this('Genesis time', '-', 'f1r57-h45h', []);
   }
 }
