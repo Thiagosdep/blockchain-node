@@ -1,3 +1,6 @@
+import pkg from 'crypto-js';
+const { SHA256 } = pkg;
+
 /**
  * Represents a blockchain block that contains data, a reference to the previous block,
  * and a unique hash for identification.
@@ -55,16 +58,20 @@ export default class Block {
     return this.#data;
   }
 
+  static hash(timestamp, lastHash, data) {
+    return SHA256(`${timestamp}${lastHash}${data}`).toString();
+  }
+
   /**
    * Returns a string representation of the block.
    * @returns {string} A string representation of the block.
    */
   toString() {
     return `Block -
-Timestamp : ${this.#timestamp}
-Last Hash : ${this.#lastHash.substring(0, 10)}
-Hash      : ${this.#hash.substring(0, 10)}
-Data      : ${this.#data}`;
+          Timestamp : ${this.#timestamp}
+          Last Hash : ${this.#lastHash.substring(0, 10)}
+          Hash      : ${this.#hash.substring(0, 10)}
+          Data      : ${this.#data}`;
   }
 
   /**
@@ -75,5 +82,19 @@ Data      : ${this.#data}`;
    */
   static genesis() {
     return new this('Genesis time', '-', 'f1r57-h45h', []);
+  }
+
+  /**
+   * Mines a new block with the provided data and the previous block.
+   * @param {Block} lastBlock - The previous block in the chain.
+   * @param {any} data - The data to be stored in the new block.
+   * @returns {Block} A new block with the provided data.
+   */
+  static mineBlock(lastBlock, data) {
+    const timestamp = Date.now();
+    const lastHash = lastBlock.hash;
+    const hash = this.hash(timestamp, lastHash, data);
+
+    return new this(timestamp, lastHash, hash, data);
   }
 }

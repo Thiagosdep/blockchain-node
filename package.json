@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
+  "type": "module",
   "scripts": {
     "format": "prettier --write ."
   },
@@ -10,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "prettier": "^3.4.2"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0"
   }
 }
