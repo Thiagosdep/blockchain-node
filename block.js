@@ -97,4 +97,14 @@ export default class Block {
 
     return new this(timestamp, lastHash, hash, data);
   }
+
+  /**
+   * Hashes the block data.
+   * @param {Block} block - The block to be hashed.
+   * @returns {string} The hash of the block.
+   */
+  static blockHash(block) {
+    const { timestamp, lastHash, data } = block;
+    return Block.hash(timestamp, lastHash, data);
+  }
 }
